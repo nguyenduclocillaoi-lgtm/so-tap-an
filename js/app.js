@@ -456,36 +456,15 @@ function openHow(id,push){ovOpened();const el=$('#how');if(push&&ui.how)(ui.howS
 function closeHow(){const el=$('#how');ui.how=null;ui.howStack=[];el.hidden=true;el.innerHTML=''}
 function howBack(){const st=ui.howStack||[];if(st.length){const id=st.pop();ui.how=id;$('#how').innerHTML=`<div class="hd" role="dialog" aria-modal="true">${howHTML(id)}</div>`}else closeHow()}
 function howRerender(){if(ui.how){const sc=$('#how').scrollTop;$('#how').innerHTML=`<div class="hd" role="dialog" aria-modal="true">${howHTML(ui.how)}</div>`;$('#how').scrollTop=sc}}
-/* ---------- bản đồ cơ 2D kiểu giải phẫu (trước + sau), toạ độ mỗi hình 0–200 × 0–440, nửa trái vẽ tay rồi lật qua x=100 ---------- */
-const BODY_SIL='M100,80 L87,80 C76,84 60,85 51,90 C40,96 34,110 35,125 C34,141 32,160 31,177 C29,197 26,221 26,244 C25,256 24,268 28,276 C34,281 40,277 40,266 C41,250 42,230 44,209 C46,193 48,181 50,171 C52,157 54,143 57,129 C61,160 69,185 70,205 C68,220 64,232 64,247 C62,280 64,301 70,321 C70,341 68,361 72,381 C76,398 80,408 80,414 C76,424 70,432 79,434 L95,434 C96,426 94,416 94,410 C92,390 94,360 92,331 C94,301 98,281 100,263 Z';
-const ABS=[[150,169],[172,190],[193,211],[214,246]].map(([a,b])=>`M98.5,${a} L90,${a+1} C88,${a+6} 88,${b-6} 89,${b-1} L98.5,${b} Z`).join(' ');
-const MUSC={
- f:{delt_side:'M50,91 C40,97 35,110 36,126 C40,124 43,116 44,106 C46,98 48,94 50,91 Z',
-    delt_front:'M53,91 C48,98 45,108 45,121 C50,122 54,114 57,104 C59,98 58,94 57,90 Z',
-    chest_upper:'M98.5,94 L65,94 C59,98 57,105 59,112 L98.5,110 Z',
-    chest:'M98.5,113 L59,114 C59,127 63,138 73,144 C83,148 93,146 98.5,142 Z',
-    biceps:'M45,129 C39,143 38,160 42,172 C47,172 51,165 53,150 C54,140 53,132 51,126 Z',
-    forearm:'M38,183 C33,201 31,223 32,241 L38,241 C40,223 43,205 47,185 Z',
-    abs:ABS,
-    obliques:'M86,151 C77,151 69,161 70,181 C72,197 76,209 82,217 L86,215 C84,197 85,171 86,151 Z',
-    hipflex:'M84,223 C79,231 81,245 92,253 L98.5,253 L98.5,249 C92,241 88,233 84,223 Z',
-    quads:'M68,263 C64,283 64,303 70,318 L78,316 C76,296 76,276 76,262 Z M78,258 C76,280 78,300 82,312 L88,312 C90,296 90,276 86,258 Z M89,289 C87,301 89,313 94,317 C98,313 98,303 95,293 Z',
-    adductors:'M89,256 C88,268 88,278 90,287 L96,285 C98,276 98,266 98,258 Z',
-    shin:'M74,339 C72,359 76,379 80,397 L84,397 C82,377 82,357 82,339 Z',
-    calves:'M87,341 C84,357 86,377 90,393 L93,393 C95,373 95,355 93,341 Z'},
- b:{traps:'M100,64 C94,76 86,82 58,90 C70,94 83,98 100,102 Z',
-    delt_rear:'M51,92 C43,96 37,108 38,124 C44,122 51,114 56,104 C58,98 57,94 51,92 Z',
-    delt_side:'M45,94 C39,100 35,110 36,125 L38,125 C38,111 41,101 47,95 Z',
-    midback:'M100,103 C86,101 74,99 66,103 C74,115 85,131 100,151 Z',
-    rotator:'M64,106 C60,114 62,125 70,131 C78,129 84,121 84,113 C78,107 70,105 64,106 Z',
-    triceps:'M40,129 C36,143 37,161 42,175 L48,173 C50,161 50,141 48,129 Z M49,131 C53,147 53,163 51,175 L55,171 C57,155 57,141 55,131 Z',
-    forearm:'M38,183 C33,201 31,223 32,241 L38,241 C40,223 43,205 47,185 Z',
-    lats:'M58,130 C60,152 66,177 80,201 C86,191 90,177 90,161 C86,151 80,141 72,133 Z',
-    erectors:'M98.5,153 L92,153 C90,181 90,211 92,237 L98.5,239 Z',
-    glute_med:'M70,227 C66,237 66,247 70,255 C76,249 80,241 82,233 Z',
-    glutes:'M98.5,237 C86,235 74,241 70,256 C68,273 78,287 98.5,287 Z',
-    hams:'M72,291 C68,307 70,325 76,337 L84,335 C82,317 82,301 82,291 Z M84,291 C84,307 86,323 90,335 L96,333 C98,317 98,301 96,291 Z',
-    calves:'M74,343 C70,357 72,373 80,385 L84,383 C84,367 82,353 80,343 Z M84,341 C84,357 86,375 92,389 C96,375 96,357 94,341 Z'}};
+/* ---------- bản đồ cơ: hình cơ thể MuscleMap (Melih Colpan, MIT) trong du-lieu-co-the.js ---------- */
+/* mỗi vùng cơ của app (MNAME) ứng với một hay nhiều nhóm của MuscleMap, theo từng mặt (f trước, b sau) */
+const MM_MAP={f:{chest_upper:['upperChest'],chest:['lowerChest'],delt_front:['frontDeltoid'],delt_side:['deltoids'],biceps:['biceps'],forearm:['forearm'],abs:['abs'],
+  obliques:['obliques'],hipflex:['hipFlexors'],quads:['quadriceps'],adductors:['adductors'],calves:['calves'],shin:['tibialis'],traps:['trapezius','upperTrapezius'],triceps:['triceps']},
+ b:{delt_side:['deltoids'],delt_rear:['rearDeltoid'],forearm:['forearm'],traps:['upperTrapezius'],midback:['trapezius','lowerTrapezius','rhomboids'],rotator:['rotatorCuff'],
+  lats:['upperBack'],triceps:['triceps'],erectors:['lowerBack'],glute_med:['gluteal'],glutes:['gluteal'],hams:['hamstring'],calves:['calves'],adductors:['adductors']}};
+const MM_SKIN=['head','hair','neck','hands','feet','knees','ankles']; /* không phải cơ: tô màu thân */
+const MM_TOP=['upperChest','lowerChest','frontDeltoid','hipFlexors','adductors','upperTrapezius','lowerTrapezius','rhomboids','rearDeltoid','rotatorCuff']; /* nhóm con, vẽ chồng lên nhóm lớn */
+const MM_SKIP=['upperAbs','lowerAbs','innerQuad','outerQuad']; /* nhóm con app không dùng */
 const MNAME={delt_front:'Vai trước',delt_side:'Vai giữa',delt_rear:'Vai sau',chest_upper:'Ngực trên',chest:'Ngực giữa/dưới',biceps:'Tay trước',forearm:'Cẳng tay',
  abs:'Cơ thẳng bụng',obliques:'Cơ chéo bụng',hipflex:'Cơ gập hông',quads:'Đùi trước',adductors:'Đùi trong',calves:'Bắp chân',shin:'Cẳng chân trước',traps:'Cơ thang trên',
  rotator:'Chóp xoay',midback:'Lưng giữa',lats:'Xô',triceps:'Tay sau',erectors:'Lưng dưới',glute_med:'Mông nhỡ',glutes:'Mông',hams:'Đùi sau'};
@@ -499,28 +478,46 @@ const MKEY=[['ngực trên','chest_upper'],['ngực dưới','chest'],['ngực g
 function partsOf(txt){const out=[];String(txt||'').toLowerCase().split(/[,·(]/).forEach(seg=>{const t=seg.trim();if(!t)return;const hit=MKEY.find(([k])=>t.includes(k));if(hit&&!out.includes(hit[1]))out.push(hit[1])});return out}
 function exAct(id){const m=MUS[id]||['',''];const a={};partsOf(m[1]).forEach(p=>a[p]=1);partsOf(m[0]).forEach(p=>a[p]=2);return a}
 /* act: {vùng: mức}; mức 2 = chính, 1 = phụ; với bản đồ tuần: mức 1–4 theo số set */
-/* hình gốc của bản đồ cơ: vẽ một lần vào <defs>, mỗi bản đồ chỉ trỏ tới (<use>) thay vì chép lại các đường vẽ dài */
-(function(){let d='';['f','b'].forEach(v=>Object.entries(MUSC[v]).forEach(([k,p])=>{d+=`<path id="bm-${v}-${k}" d="${p}"/>`}));
-  d+=`<g id="bm-base"><ellipse cx="100" cy="38" rx="19" ry="25"/><path d="M89,56 L89,82 L111,82 L111,56 Z"/><path d="${BODY_SIL}"/><path d="${BODY_SIL}" transform="translate(200,0) scale(-1,1)"/></g>`;
+/* tên hiện khi giữ ngón tay lên một nhóm cơ trên hình */
+const MM_TITLE={};['f','b'].forEach(v=>Object.entries(MM_MAP[v]).forEach(([k,ss])=>ss.forEach(s=>{if(!MM_TITLE[s])MM_TITLE[s]=MNAME[k]})));
+const mmG=()=>S.profile.sex==='f'?'f':'m'; /* dáng nữ khi hồ sơ chọn Nữ */
+/* hình gốc: vẽ một lần vào <defs>, mỗi bản đồ chỉ trỏ tới (<use>) thay vì chép lại các đường vẽ dài */
+const MM_SVG=(function(){let d='';Object.entries(CO_THE).forEach(([g,G])=>['f','b'].forEach(v=>Object.entries(G[v+'p']).forEach(([s,ps])=>{
+    d+=`<g id="mm-${g}${v}-${s}">${ps.map(x=>`<path d="${x}"/>`).join('')}</g>`})));
   const el=document.createElementNS('http://www.w3.org/2000/svg','svg');el.setAttribute('aria-hidden','true');el.style.cssText='position:absolute;width:0;height:0;overflow:hidden';
-  el.innerHTML='<defs>'+d+'</defs>';document.body.prepend(el)})();
+  el.innerHTML='<defs>'+d+'</defs><g id="mm-do"></g>';document.body.prepend(el);return el})();
+/* khung bao (bbox) của một nhóm: đo bằng một <use> tạm (phần trong <defs> không được vẽ nên không đo trực tiếp được) */
+const mmBoxC={};
+function mmBox(g,v,s){const k=g+v+s;if(k in mmBoxC)return mmBoxC[k];const u=document.createElementNS('http://www.w3.org/2000/svg','use');u.setAttribute('href',`#mm-${g}${v}-${s}`);
+  const host=MM_SVG.querySelector('#mm-do');host.appendChild(u);let b=null;try{const r=u.getBBox();if(r.width)b={x:r.x,y:r.y,w:r.width,h:r.height}}catch(_){}u.remove();return mmBoxC[k]=b}
 function bodyMap(act,opt){opt=opt||{};const heat=opt.heat,pulse=opt.pulse&&!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);
   const fill=l=>heat?['','var(--h1)','var(--h2)','var(--h3)','var(--h4)'][l]:l>=2?'var(--m2)':'var(--m1)';
-  const M='translate(200,0) scale(-1,1)';
-  const half=(view)=>{let g='';Object.entries(MUSC[view]).forEach(([k,d])=>{const l=act[k]||0;const an=pulse&&l>=2&&!heat?'<animate attributeName="opacity" values="1;0.5;1" dur="3.2s" repeatCount="indefinite"/>':'';
-      const st=l?`fill:${fill(l)}`:'';const t=MNAME[k]?`<title>${esc(MNAME[k])}</title>`:'';g+=`<use href="#bm-${view}-${k}" class="bm-m ${l?'on':''}" style="${st}">${t}${an}</use><use href="#bm-${view}-${k}" class="bm-m ${l?'on':''}" style="${st}" transform="${M}">${t}${an}</use>`});return g};
-  const fig=(view,dx)=>`<g transform="translate(${dx},0)"><use href="#bm-base" class="bm-s"/>
-    ${view==='b'?'<path d="M100,150 L100,240" class="bm-line"/>':'<path d="M100,94 L100,250" class="bm-line"/>'}${half(view)}<text x="100" y="458" text-anchor="middle" class="bm-t">${view==='f'?'MẶT TRƯỚC':'MẶT SAU'}</text></g>`;
-  return `<svg class="bm ${opt.cls||''}" viewBox="${opt.vb||'0 0 420 466'}" role="img" aria-label="${esc(opt.label||'Bản đồ nhóm cơ')}">${opt.only!=='b'?fig('f',0):''}${opt.only!=='f'?fig('b',220):''}</svg>`}
+  const g=mmG(),G=CO_THE[g];
+  const fig=v=>{const lv={};Object.entries(MM_MAP[v]).forEach(([k,ss])=>{const l=act[k]||0;if(l)ss.forEach(s=>{lv[s]=Math.max(lv[s]||0,l)})});
+    if(v==='b'&&!lv.rotatorCuff&&lv.upperBack)lv.rotatorCuff=lv.upperBack; /* như MuscleMap: chóp xoay theo màu xô khi không tô riêng */
+    const ss=Object.keys(G[v+'p']).filter(s=>!MM_SKIP.includes(s)&&(s!=='rhomboids'||lv[s])); /* cơ trám chỉ vẽ khi được tô */
+    const order=ss.filter(s=>!MM_TOP.includes(s)).concat(ss.filter(s=>MM_TOP.includes(s)));
+    const V=G[v];
+    return order.map(s=>{if(MM_SKIN.includes(s))return `<use href="#mm-${g}${v}-${s}" class="bm-s"/>`;const l=lv[s]||0;
+      const an=pulse&&l>=2&&!heat?'<animate attributeName="opacity" values="1;0.5;1" dur="3.2s" repeatCount="indefinite"/>':'';
+      return `<use href="#mm-${g}${v}-${s}" class="bm-m ${l?'on':''}"${l?` style="fill:${fill(l)}"`:''}>${MM_TITLE[s]?`<title>${esc(MM_TITLE[s])}</title>`:''}${an}</use>`}).join('')
+      +`<text x="${V.x+V.w/2}" y="${G.y+G.h+70}" text-anchor="middle" class="bm-t">${v==='f'?'MẶT TRƯỚC':'MẶT SAU'}</text>`};
+  const vb=opt.vb||`0 ${G.y} ${G.b.x+G.b.w} ${G.h+100}`;
+  return `<svg class="bm mm ${opt.cls||''}" viewBox="${vb}" role="img" aria-label="${esc(opt.label||'Bản đồ nhóm cơ')}">${opt.only!=='b'?fig('f'):''}${opt.only!=='f'?fig('b'):''}</svg>`}
 function weekAct(){const v={};S.plan.forEach(d=>d.items.forEach(it=>{const m=MUS[it.ex]||['',''],n=num(it.sets);partsOf(m[0]).forEach(p=>v[p]=(v[p]||0)+n);partsOf(m[1]).forEach(p=>{if(!partsOf(m[0]).includes(p))v[p]=(v[p]||0)+n/2})}));
   const a={};Object.entries(v).forEach(([k,x])=>{a[k]=x<=0?0:x<6?1:x<10?2:x<=16?3:4});return{a,v}}
 function bmLegend(heat){return heat?`<div class="bm-leg small"><span><i style="background:var(--h1)"></i>1–5</span><span><i style="background:var(--h2)"></i>6–9</span><span><i style="background:var(--h3)"></i>10–16</span><span><i style="background:var(--h4)"></i>&gt;16 set/tuần</span></div>`
   :`<div class="bm-leg small"><span><i style="background:var(--m2)"></i>Cơ chính</span><span><i style="background:var(--m1)"></i>Cơ phụ</span></div>`}
 /* ---------- giao diện buổi tập: ô nhóm cơ (phục hồi + tỉ trọng), ghi chú buổi, danh sách bài ---------- */
-const REG_C={chest_upper:['f',112],chest:['f',120],delt_front:['f',105],delt_side:['f',105],biceps:['f',150],forearm:['f',205],abs:['f',190],obliques:['f',185],hipflex:['f',235],
- quads:['f',290],adductors:['f',275],shin:['f',365],calves:['b',365],traps:['b',95],delt_rear:['b',108],midback:['b',122],rotator:['b',115],lats:['b',160],triceps:['b',150],
- erectors:['b',195],glute_med:['b',245],glutes:['b',262],hams:['b',312]};
-const cropVB=r=>{const c=REG_C[r]||['f',150];return `${(c[0]==='b'?220:0)+12} ${c[1]-88} 176 176`};
+/* ô cắt nhỏ của từng vùng: mặt nào của hình; khung vuông lấy tâm theo khung bao thật của vùng trên hình MuscleMap */
+const REG_C={chest_upper:'f',chest:'f',delt_front:'f',delt_side:'f',biceps:'f',forearm:'f',abs:'f',obliques:'f',hipflex:'f',quads:'f',adductors:'f',shin:'f',
+ calves:'b',traps:'b',delt_rear:'b',midback:'b',rotator:'b',lats:'b',triceps:'b',erectors:'b',glute_med:'b',glutes:'b',hams:'b'};
+const cropC={};
+function cropVB(r){const g=mmG(),v=REG_C[r]||'f',k=g+r;if(cropC[k])return cropC[k];const G=CO_THE[g],V=G[v];let x0=1e9,x1=-1e9,y0=1e9,y1=-1e9;
+  (MM_MAP[v][r]||[]).forEach(s=>{const b=mmBox(g,v,s);if(b){x0=Math.min(x0,b.x);x1=Math.max(x1,b.x+b.w);y0=Math.min(y0,b.y);y1=Math.max(y1,b.y+b.h)}});
+  const ok=y1>y0,cx=ok?(x0+x1)/2:V.x+V.w/2,cy=ok?(y0+y1)/2:G.y+G.h/2;
+  const z=Math.min(V.w,Math.max(V.w*0.6,ok?Math.max(x1-x0,y1-y0)*1.2:V.w)); /* vùng nhỏ phóng to, vùng rộng (hai tay) lùi ra cho vừa */
+  return cropC[k]=`${cx-z/2} ${cy-z/2} ${z} ${z}`}
 const REG_GROUP={chest_upper:'chest',delt_side:'delt_front'}; /* gộp vùng nhỏ khi hiển thị ô */
 const REG_LABEL={chest:'Ngực',delt_front:'Vai',delt_rear:'Vai sau',biceps:'Tay trước',triceps:'Tay sau',forearm:'Cẳng tay',abs:'Bụng',obliques:'Cơ chéo',hipflex:'Gập hông',quads:'Đùi trước',
  adductors:'Đùi trong',calves:'Bắp chân',traps:'Cầu vai',midback:'Lưng giữa',rotator:'Chóp xoay',lats:'Xô',erectors:'Lưng dưới',glute_med:'Mông nhỡ',glutes:'Mông',hams:'Đùi sau'};
@@ -533,7 +530,7 @@ function recoveryNow(){const now=Date.now(),R={};S.logs.forEach(L=>{const t=L.id
   Object.entries(load).forEach(([k,v])=>{const need=Math.min(72,24+6*v);const pc=Math.min(100,Math.round(h/need*100));R[k]=Math.min(R[k]??100,pc)})});return R}
 function sessShare(day){const tot={};let sum=0;day.items.forEach(it=>Object.entries(exLoad(it.ex,num(it.sets))).forEach(([k,v])=>{tot[k]=(tot[k]||0)+v;sum+=v}));
   return Object.entries(tot).map(([k,v])=>[k,Math.round(v/sum*100)]).sort((a,b)=>b[1]-a[1])}
-function regThumb(r,cls){const a={};a[r]=2;if(r==='chest')a.chest_upper=2;if(r==='delt_front')a.delt_side=2;return bodyMap(a,{cls:'tile '+(cls||''),vb:cropVB(r),only:(REG_C[r]||['f'])[0]})}
+function regThumb(r,cls){const a={};a[r]=2;if(r==='chest')a.chest_upper=2;if(r==='delt_front')a.delt_side=2;return bodyMap(a,{cls:'tile '+(cls||''),vb:cropVB(r),only:REG_C[r]||'f'})}
 function sessTiles(day){const sh=sessShare(day),R=recovery();if(!sh.length)return '';
   return `<div class="tiles">${sh.map(([k,pc])=>{const rc=R[k]??100;return `<div class="tile-c"><span class="tl">${esc(REG_LABEL[k]||MNAME[k]||k)}</span>${regThumb(k)}<span class="small muted">Phục hồi</span><b class="num rc ${rc<60?'lo':rc<100?'mid':''}">${rc}%</b><span class="tsh" title="Tỉ trọng trong buổi">${pc}%</span></div>`}).join('')}</div>`}
 function vSession(di){const d=S.plan[di],e=sessionEst(d),w=viewWeek(),isToday=di===weekdayIdx(today());const R=recovery();

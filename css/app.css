@@ -367,3 +367,8 @@ button.chip-b{cursor:pointer}
 .hd-hero .bm.sm{max-width:220px}
 .pick .thumb{width:60px;height:40px;object-fit:cover;border-radius:6px;flex:none;background:var(--surface-2)}
 .pick .l{flex:1}
+
+/* bản đồ cơ MuscleMap: toạ độ gốc lớn hơn hình cũ khoảng 3,6 lần nên viền và chữ phải to tương ứng */
+.bm.mm .bm-m{stroke-width:3.5}
+.bm.mm .bm-t{font-size:48px;letter-spacing:.08em}
+.bm.mm.tile .bm-m{stroke-width:5}

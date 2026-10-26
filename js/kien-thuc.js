@@ -172,6 +172,7 @@ function vNotes(){
       <li><a href="https://pacompendium.com/" target="_blank" rel="noopener">Compendium of Physical Activities</a> – giá trị MET.</li>
       <li><a href="https://exercisedb.dev/" target="_blank" rel="noopener">ExerciseDB</a> (qua dự án openGym, giấy phép MIT, © Hasan Emir Yıldırım) – tên, nhóm cơ và các bước của 159 bài tập bổ sung, đã dịch sang tiếng Việt.</li>
       <li><a href="https://github.com/yuhonas/free-exercise-db" target="_blank" rel="noopener">free-exercise-db</a> (phạm vi công cộng) – ảnh minh hoạ hai tư thế của 175 bài.</li>
+      <li><a href="https://github.com/melihcolpan/MuscleMap" target="_blank" rel="noopener">MuscleMap</a> (Melih Colpan, giấy phép MIT) – hình cơ thể của bản đồ nhóm cơ.</li>
       <li>Schoenfeld và cộng sự 2017, Journal of Sports Sciences – số set mỗi tuần.</li>
       <li>Alonso-Coello và cộng sự 2005, Cochrane – chất xơ và trĩ.</li>
       <li>Paulsen và cộng sự 2014, Journal of Physiology – vitamin C/E và thích nghi tập luyện.</li>

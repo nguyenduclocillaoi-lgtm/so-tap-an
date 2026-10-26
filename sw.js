@@ -1,6 +1,6 @@
 /* Service worker: lưu sẵn các file của app trong máy để mở được khi không có mạng.
    MỖI LẦN SỬA FILE CỦA APP: tăng số PHIEN_BAN để điện thoại tải bản mới. */
-const PHIEN_BAN = 'so-tap-v3';
+const PHIEN_BAN = 'so-tap-v4';
 const FILE_APP = [
   './',
   'index.html',
@@ -9,6 +9,7 @@ const FILE_APP = [
   'js/kien-thuc.js',
   'js/du-lieu-opengym.js',
   'js/du-lieu-anh.js',
+  'js/du-lieu-co-the.js',
   'js/app.js',
   'manifest.webmanifest',
   'icons/icon-192.png',
