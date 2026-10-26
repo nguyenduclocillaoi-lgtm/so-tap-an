@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Sổ Tập & Ăn</title>
+<meta name="description" content="Ghi buổi tập, lịch tập, lịch ăn và kiến thức tập gym">
+<meta name="theme-color" content="#EDF0EF" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0F1412" media="(prefers-color-scheme: dark)">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png" type="image/png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap">
+<style>:root{color-scheme:light}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <div class="brand-row">
+      <h1 class="brand">Sổ tập <span>&</span> ăn</h1>
+      <div class="topsum" id="topSum"></div>
+      <div class="sync-st" id="syncSt" aria-live="polite"></div>
+    </div>
+  </header>
+<nav class="bnav" role="tablist" id="tabs" aria-label="Điều hướng">
+      <button role="tab" data-tab="today"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/><path d="M9 15l2 2 4-4"/></svg><span>Hôm nay</span></button>
+      <button role="tab" data-tab="plan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 7v10M3 9v6M18 7v10M21 9v6M6 12h12"/></svg><span>Tập</span></button>
+      <button role="tab" data-tab="meal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h18a9 9 0 0 1-18 0z"/><path d="M8 8c0-2 2-2 2-4M13 8c0-2 2-2 2-4"/></svg><span>Ăn</span></button>
+      <button role="tab" data-tab="track"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 20h18"/><path d="M5 16l4-5 4 3 6-8"/></svg><span>Theo dõi</span></button>
+      <button role="tab" data-tab="more"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg><span>Thêm</span></button>
+    </nav>
+  <main id="view"></main>
+</div>
+<div id="modal" hidden></div>
+<div id="how" hidden></div>
+<div id="wo" hidden role="dialog" aria-modal="true" aria-label="Chế độ đang tập"></div>
+<div id="toast" hidden role="status"></div>
+
+<script src="js/du-lieu.js"></script>
+<script src="js/kien-thuc.js"></script>
+<script src="js/du-lieu-opengym.js"></script>
+<script src="js/du-lieu-anh.js"></script>
+<script src="js/app.js"></script>
+<script>
+/* cài như app: đăng ký service worker (chạy không cần mạng) và xin giữ dữ liệu lâu dài */
+if ('serviceWorker' in navigator && location.protocol !== 'file:') {
+  window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+}
+if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => {});
+</script>
+</body>
+</html>
